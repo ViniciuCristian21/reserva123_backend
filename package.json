@@ -1,0 +1,12 @@
+{
+  "name": "reserva123",
+  "version": "1.0.0",
+  "description": "API feita na intenção de aprender e exercitar conhecimentos sobre ferramentas e tecnologias que estou aprendendo.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "Viniciu Cristian",
+  "license": "ISC"
+}
