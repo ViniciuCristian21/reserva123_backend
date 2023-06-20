@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String
+  password String
+  phone    String
+  address  String
+
+  reservation Reservation[]
+
+  @@map("users")
+}
+
+model Room {
+  id          String @id @default(uuid())
+  number      String
+  type        String
+  capacity    Int
+  description String
+  price       Float
+
+  reservation Reservation[]
+
+  @@map("rooms")
+}
+
+model Reservation {
+  id        String    @id @default(uuid())
+  check_in  DateTime
+  check_out DateTime
+  status    String
+  amount    Decimal
+  payment   Payment[]
+
+  id_user String?
+  user    User?   @relation(fields: [id_user], references: [id], onDelete: Cascade)
+
+  id_room String?
+  room    Room?   @relation(fields: [id_room], references: [id], onDelete: Cascade)
+
+  @@map("reservations")
+}
+
+model Payment {
+  id           String   @id @default(uuid())
+  amount       Decimal
+  payment_at   DateTime @default(now())
+  payment_type String
+
+  id_reservation String?
+  reservation    Reservation? @relation(fields: [id_reservation], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
