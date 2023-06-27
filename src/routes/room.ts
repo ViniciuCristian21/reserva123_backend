@@ -7,12 +7,17 @@ import { prisma } from '../lib/prisma'
 export async function roomRoutes(app: FastifyInstance) {
 
     app.get("/rooms", async (request) => {
+
+        await request.jwtVerify()
+        
         const rooms = await prisma.room.findMany()
 
         return rooms
     })
     
     app.post("/room", async (request) => {
+
+        await request.jwtVerify()
 
         const paramsSchema = z.object({
             number: z.string(),
