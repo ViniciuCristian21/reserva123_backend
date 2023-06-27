@@ -5,13 +5,9 @@ import { prisma } from '../lib/prisma'
 
 export async function reservationRoutes(app: FastifyInstance) {
 
-
-    app.get("/", async (request) => {
-        return "Olá mundo"
-    })
-
-
     app.post("/reservation/:id", async (request) => {
+        
+        await request.jwtVerify()
         
         const paramsSchema = z.object({
             id: string().uuid()
